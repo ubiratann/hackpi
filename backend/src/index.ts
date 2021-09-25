@@ -2,6 +2,7 @@ import * as dotenv from "dotenv"
 import express from "express"
 import cors from "cors"
 import helmet from "helmet"
+import { categoriaRouter } from "./routes/categoria.routes";
 
 
 dotenv.config();
@@ -25,3 +26,6 @@ app.use(express.json());
 app.listen(PORT, ()=>{
   console.log(`SERVIDOR INICIADO NA PORTA ${PORT}`);  
 });
+
+
+app.get('/categoria', categoriaRouter);
