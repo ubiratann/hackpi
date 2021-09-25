@@ -23,5 +23,5 @@ app.use(express.json());
 
 
 app.listen(PORT, ()=>{
-  console.log(`SERVIDOR INICADO NA PORTA ${PORT}`);  
+  console.log(`SERVIDOR INICIADO NA PORTA ${PORT}`);  
 });
