@@ -3,31 +3,39 @@ import { StyleSheet, View, Text, Image, TouchableOpacity, FlatList, Dimensions }
 
 import img from '../assets/img.png';
 import arrow from '../assets/arrow.png';
-
+import axios from 'axios';
 const deviceWidth = Dimensions.get('window').width;
 
 export default function Welcome({ navigation }: any) {
 
-
-  const [dataCategorie, setDataCategorie] = useState([{
-    name: ''
+  const url = 'http://localhost:7000/categoria/lista'
+  const [dataCategorie, setCategorias] = useState([{
+    nome: ''
   }]);
 
   useEffect(() => {
 
-    setDataCategorie([
-      { name: 'Materiais Pedagógicos' },
-      { name: 'Materiais Pedagógicos' },
-      { name: 'Materiais Pedagógicos' },
-      { name: 'Materiais Pedagógicos' },
-      { name: 'Materiais Pedagógicos' },
-      { name: 'Materiais Pedagógicos' },
-    ]);
+    async function loadMateriais() {
+        const response = await axios.get(url,{})
+        setCategorias(response.data)
+    }
 
+    
+    // setDataCategorie([
+    //   { name: 'Materiais Pedagógicos' },
+    //   { name: 'Materiais Pedagógicos' },
+    //   { name: 'Materiais Pedagógicos' },
+    //   { name: 'Materiais Pedagógicos' },
+    //   { name: 'Materiais Pedagógicos' },
+    //   { name: 'Materiais Pedagógicos' },
+    // ]);
+    loadMateriais();
   }, []);
 
-  function handleStart() {
+  function  handleStart() {
     navigation.navigate('DefineItem');
+
+
   }
 
   return (
@@ -47,7 +55,7 @@ export default function Welcome({ navigation }: any) {
             onPress={handleStart}
           >
             <Image style={styles.buttonImage} source={require(`../assets/${'img'}.png`)} />
-            <Text style={styles.textButton}>{item.name}</Text>
+            <Text style={styles.textButton}>{item.nome}</Text>
           </TouchableOpacity>
         )}
         showsVerticalScrollIndicator={false}

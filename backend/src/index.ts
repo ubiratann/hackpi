@@ -4,6 +4,8 @@ import cors from "cors"
 import helmet from "helmet"
 import { categoriaRouter } from "./routes/categoria.routes";
 import * as mongoDB from "mongodb";
+import { elementoRouter } from "./routes/elemento.routes";
+import { RespostaRouter } from "./routes/reposta.routes";
 
 
 //configurando dados estaticos
@@ -25,7 +27,8 @@ app.use(cors());
 app.use(express.json()); 
 
 app.use('/categoria', categoriaRouter);
-
+app.use('/elemento', elementoRouter);
+app.use('/resposta', RespostaRouter)
 app.listen(PORT, ()=>{
   console.log('Servidor iniciado na porta: ' + PORT);
 })

@@ -13,8 +13,8 @@ export default function Routes() {
   return (
     <NavigationContainer>
       <Stack.Navigator screenOptions={{ headerShown: false }}>
-        <Stack.Screen name='DefineItem' component={DefineItem} />
         <Stack.Screen name='Welcome' component={Welcome} />
+        <Stack.Screen name='DefineItem' component={DefineItem} />
         <Stack.Screen name='Avatar' component={Avatar} />
         <Stack.Screen name='Categories' component={Categories} />
       </Stack.Navigator>
