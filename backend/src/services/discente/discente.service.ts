@@ -1,22 +1,16 @@
 import * as mongoDB from "mongodb";
 import * as dotenv from "dotenv";
 import { Client } from "../..";
+import { GenericoService } from "../generico/generico.service";
+import { Discente } from "../../models/discente/discente";
 
-export const collections : { discente?: mongoDB.Collection } = {}
+export class DiscenteService extends GenericoService<Discente>{
 
+    getNomeColecao(){
+        return process.env.COLECAO_DISCENTE;
+    }
 
-export async function conectar(): Promise<void>{
-    dotenv.config();
-
-    await  Client.connect();
-    
-    const db: mongoDB.Db =  Client.db(process.env.DB_NAME);
-
-    const discenteCollection: mongoDB.Collection = db.collection(`${process.env.DISCENTE_COLLECTION_NAME}`);
-    collections.discente = discenteCollection;
-}
-
-
-export async function desconectar(): Promise<void>{
-    await Client.close();
+    getNomeBanco(){
+        return process.env.NOME_BANCO;
+    }
 }

@@ -15,9 +15,14 @@ export class GenericoService<Entity>{
      * @returns  Referência para uma coleção no banco
     */
     async  getConexao(): Promise<mongoDB.Collection<mongoDB.Document>>{
-        const conexao = await  Client.connect();
-        const db: mongoDB.Db =  conexao.db(`${this.getNomeBanco()}`);
-        return db.collection(`${this.getNomeColecao()}`);   
+        try{
+            const conexao = await  Client.connect();
+            const db: mongoDB.Db =  conexao.db(`${this.getNomeBanco()}`);
+            return db.collection(`${this.getNomeColecao()}`);   
+        }
+        catch(erro){
+            throw erro;
+        }
     }
 
     /**
@@ -26,7 +31,12 @@ export class GenericoService<Entity>{
      * @returns O primeiro registro encontrado que se encaixa no filtro
      */
     async buscarUnico(query: mongoDB.Document ): Promise<mongoDB.Document | null>{
-        return await (await this.getConexao()).findOne(query);
+        try{
+            return await (await this.getConexao()).findOne(query);
+        }
+        catch(erro){
+            throw erro;
+        }
     }
 
     /**
@@ -42,8 +52,8 @@ export class GenericoService<Entity>{
                 return result;
             });
         }
-        catch(error){
-            throw error;
+        catch(erro){
+            throw erro;
         }
     }
 
@@ -53,7 +63,12 @@ export class GenericoService<Entity>{
      * 
     */
     async inserirUnico(entity: mongoDB.Document ): Promise<mongoDB.Document | null>{
-        return await (await this.getConexao()).insertOne(entity);
+        try{
+            return await (await this.getConexao()).insertOne(entity);
+        }
+        catch(erro){
+            throw erro;
+        }
     }
 
     /**
@@ -62,7 +77,12 @@ export class GenericoService<Entity>{
      * 
     */
     async inserirLista(entity: mongoDB.Collection<mongoDB.Document>[] ): Promise<mongoDB.Document | null>{
-        return await (await this.getConexao()).insertMany(entity);
+        try{
+            return await (await this.getConexao()).insertMany(entity);
+        }
+        catch(erro){
+            throw erro;
+        }
     }
 
     /**

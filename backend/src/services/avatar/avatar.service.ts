@@ -1,22 +1,14 @@
-import * as mongoDB from "mongodb";
-import * as dotenv from "dotenv";
-import { Client } from "../..";
+import { GenericoService } from "../generico/generico.service";
+import { Avatar } from "../../models/avatar/avatar";
 
-export const collections : { avatar?: mongoDB.Collection } = {}
+export class AvatarService extends GenericoService<Avatar>{
 
+    getNomeColecao(){
+        return process.env.COLECAO_AVATAR
+    }
 
-export async function conectar(): Promise<void>{
-    dotenv.config();
+    getNomeBanco(){
+        return process.env.NOME_BANCO;
+    }
 
-    await  Client.connect();
-    
-    const db: mongoDB.Db =  Client.db(process.env.DB_NAME);
-
-    const avatarCollection: mongoDB.Collection = db.collection(`${process.env.AVATAR_COLLECTION_NAME}`);
-    collections.avatar = avatarCollection;
-}
-
-
-export async function desconectar(): Promise<void>{
-    await Client.close();
 }

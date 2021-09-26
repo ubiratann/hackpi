@@ -1,11 +1,9 @@
 import { Avatar } from "../avatar/avatar";
-import { NivelEscolaridade } from "../nivel-escolaridade/nivel-escolaridade";
 
 interface IDiscente{
     id?: number;
     nome?: string;
-    idNivelEscolaridade?: number;
-    nivelEscolaridade?: NivelEscolaridade;
+    nivelEscolaridade?: number;
     idAvatar?: number;
     avatar?: Avatar;
     dataInclusao?: Date;

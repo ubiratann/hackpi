@@ -1,4 +1,3 @@
-import { NivelEscolaridade } from "../nivel-escolaridade/nivel-escolaridade";
 
 interface IElemento{
     id?: number;
