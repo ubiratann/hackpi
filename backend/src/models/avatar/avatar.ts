@@ -4,9 +4,7 @@ interface IAvatar{
     id: number,
     imagem: string;
     idDiscente: number;
-    discente: Discente;
     dataInclusao: Date;
-
 }
 
 

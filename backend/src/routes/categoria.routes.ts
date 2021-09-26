@@ -1,17 +1,18 @@
 import express, { Request, Response } from "express";
 import { Categoria } from "../models/categoria/categoria";
-import { CategoryService } from '../services/categoria/categoria.service'
+import { CategoriaService } from '../services/categoria/categoria.service'
 import * as mongoDB from "mongodb";
 
 
 export const categoriaRouter = express.Router();
 
+
 categoriaRouter.get('/', async (req: Request, res: Response)=>{
     try{
-        let categoryService = new CategoryService();
+        let service = new CategoriaService();
         const categoria: Categoria = new Categoria(req.body)
         
-        const response = await categoryService.getOne(categoria.props);
+        const response = await service.buscarUnico(categoria.props);
         
         if(response){
             res.status(200).send(response);
@@ -27,9 +28,9 @@ categoriaRouter.get('/', async (req: Request, res: Response)=>{
 
 categoriaRouter.get('/all', async (req: Request, res: Response)=>{
     try{
-        let categoryService = new CategoryService();
+        let service = new CategoriaService();
         const query: Categoria = new Categoria(req.body)
-        const response = await categoryService.getAll(query);
+        const response = await service.buscarLista(query);
         
         if(response){
             res.status(200).send(response);

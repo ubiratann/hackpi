@@ -1,20 +1,20 @@
 import * as mongoDB from "mongodb";
 import * as dotenv from "dotenv";
-import { GenericService } from "../generic/generic.service"
+import { GenericoService } from "../generico/generico.service"
 import { Categoria } from "../../models/categoria/categoria";
 
-export class CategoryService extends GenericService<Categoria>{
+export class CategoriaService extends GenericoService<Categoria>{
 
     constructor(){
         super();
     }
     
-    getCollectionName() {
-        return process.env.CATEGORY_COLLECTION_NAME;
+    getNomeColecao(){
+        return process.env.COLECAO_CATEGORIA;
     }
 
-    getDBName() {
-        return process.env.DB_NAME;
+    getNomeBanco() {
+        return process.env.NOME_BANCO;
     }
 }
 
