@@ -10,3 +10,6 @@
 ### O projeto frontend
     1. Execute o comando: npm i
     2. Execute o comanod: npm run web para ver a aplicao no navegador
+    
+    
+   ![imagem](../imgs/teste.png)
