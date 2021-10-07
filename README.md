@@ -12,4 +12,4 @@
     2. Execute o comanod: npm run web para ver a aplicao no navegador
     
     
-   ![imagem](../imgs/teste.png)
+   ![imagem](https://github.com/ubiratann/hackpi/blob/main/imgs/teste.png?raw=true)
