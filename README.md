@@ -17,8 +17,8 @@ Foram definidos 4 módulos considerados os principais para uma entrega de valor 
 
 ### Estimativas pra conclusão
 - Backend: 2 dias
-- Frontend: x dias
-
+- Frontend: 1 dia
+- Design: 1 dia
 
 ### Requisitos
 - [ ] Tela de saudações
@@ -29,8 +29,8 @@ Foram definidos 4 módulos considerados os principais para uma entrega de valor 
 
 ### Estimativas pra conclusão
 - Backend: 3 dias
-- Frontend: x dias
-
+- Frontend: 2 dias
+- Design: 4 dias
 
 ### Requisitos
 
@@ -45,8 +45,8 @@ Foram definidos 4 módulos considerados os principais para uma entrega de valor 
 ### Estimativas pra conclusão
 
 - Backend: 7 dias
-- Frontend: x dias
-
+- Frontend: 5 dias
+- Design: 7 dias
 
 ### Requisitos
 
@@ -66,8 +66,8 @@ Foram definidos 4 módulos considerados os principais para uma entrega de valor 
 ### Estimativas pra conclusão
 
 - Backend: 3 dias
-- Frontend: x dias
-
+- Frontend: 5 dias
+- Design: 1 dia
 
 ### Requisitos
 
