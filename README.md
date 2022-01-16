@@ -80,4 +80,4 @@ Foram definidos 4 módulos considerados os principais para uma entrega de valor 
 
 ## Demo
 
-Link para demonstração no figma [aqui!](linkhttps://www.figma.com/file/gS9RdgLB9GLAISqQGjQ6YA/Untitled?node-id=0%3A1)
+Link para demonstração no figma [aqui!](https://www.figma.com/file/gS9RdgLB9GLAISqQGjQ6YA/Untitled?node-id=0%3A1)
