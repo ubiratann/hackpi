@@ -30,9 +30,10 @@ export class GenericoService<Entity>{
      * @param query  Entidade mapeada da coleção, que serve de filtro
      * @returns O primeiro registro encontrado que se encaixa no filtro
      */
-    async buscarUnico(query: mongoDB.Document ): Promise<mongoDB.Document | null>{
+    async buscarUnico(query:{} ): Promise<mongoDB.Document | null>{
         try{
-            return await (await this.getConexao()).findOne(query);
+            const response =  await (await this.getConexao()).findOne(query);
+            return response;
         }
         catch(erro){
             throw erro;
@@ -44,13 +45,14 @@ export class GenericoService<Entity>{
      * @param query  Entidade mapeada da coleção, que serve de filtro
      * @returns Uma lista com os registros que se encaixaram on filtro
      */
-    async buscarLista(query: mongoDB.Document ): Promise<FindCursor<Entity> | void>{
+    async buscarLista(query:{} ): Promise<FindCursor<Entity>>{
         try{
-            let response = (await this.getConexao()).find(query) as FindCursor<Entity>;
-            response.toArray((err, result)=>{
-                if(err) throw err;
-                return result;
-            });
+            let response =  await (await this.getConexao()).find(query) as FindCursor<Entity>;
+            // response.toArray((err, result)=>{
+            //     if(err) throw err;
+            //     return result;
+            // });
+            return response;
         }
         catch(erro){
             throw erro;
