@@ -1,26 +1,32 @@
 import { Injectable } from '@nestjs/common';
+import { InjectRepository } from '@nestjs/typeorm';
+import { Repository } from 'typeorm';
 import { CreateAvatarDto } from './dto/create-avatar.dto';
 import { UpdateAvatarDto } from './dto/update-avatar.dto';
+import { Avatar } from './entities/avatar.entity';
 
 @Injectable()
 export class AvatarService {
+
+  constructor(@InjectRepository(Avatar) private readonly repo: Repository<Avatar>) { }
+
   create(createAvatarDto: CreateAvatarDto) {
     return 'This action adds a new avatar';
   }
 
-  findAll() {
-    return `This action returns all avatar`;
+  async findAll() {
+    return await this.repo.find();
   }
 
-  findOne(id: number) {
-    return `This action returns a #${id} avatar`;
+  async findOne(id: number) {
+    return await this.repo.findOne({ id: id });
   }
 
-  update(id: number, updateAvatarDto: UpdateAvatarDto) {
-    return `This action updates a #${id} avatar`;
+  async update(id: number, updateAvatarDto: UpdateAvatarDto) {
+    return await this.repo.update(id , updateAvatarDto);
   }
 
-  remove(id: number) {
-    return `This action removes a #${id} avatar`;
+  async remove(id: number) {
+    return await this.repo.remove([]);
   }
 }

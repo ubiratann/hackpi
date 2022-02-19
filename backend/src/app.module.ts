@@ -6,9 +6,18 @@ import { DiscenteModule } from './discente/discente.module';
 import { ElementoModule } from './elemento/elemento.module';
 import { CategoriaModule } from './categoria/categoria.module';
 import { AvatarModule } from './avatar/avatar.module';
+import { TypeOrmModule } from '@nestjs/typeorm';
+import { configService } from './config/config.service';
 
 @Module({
-  imports: [RespostaModule, DiscenteModule, ElementoModule, CategoriaModule, AvatarModule],
+  imports: [
+    TypeOrmModule.forRoot(configService.getTypeOrmConfig()),
+    RespostaModule, 
+    DiscenteModule, 
+    ElementoModule, 
+    CategoriaModule, 
+    AvatarModule
+  ],
   controllers: [AppController],
   providers: [AppService],
 })

@@ -8,27 +8,27 @@ export class AvatarController {
   constructor(private readonly avatarService: AvatarService) {}
 
   @Post()
-  create(@Body() createAvatarDto: CreateAvatarDto) {
-    return this.avatarService.create(createAvatarDto);
+  async create(@Body() createAvatarDto: CreateAvatarDto) {
+    return await this.avatarService.create(createAvatarDto);
   }
 
   @Get()
-  findAll() {
-    return this.avatarService.findAll();
+  async findAll() {
+    return await this.avatarService.findAll();
   }
 
   @Get(':id')
-  findOne(@Param('id') id: string) {
-    return this.avatarService.findOne(+id);
+  async findOne(@Param('id') id: number) {
+    return await this.avatarService.findOne(+id);
   }
 
   @Patch(':id')
-  update(@Param('id') id: string, @Body() updateAvatarDto: UpdateAvatarDto) {
-    return this.avatarService.update(+id, updateAvatarDto);
+  async update(@Param('id') id: number, @Body() updateAvatarDto: UpdateAvatarDto) {
+    return await this.avatarService.update(id, updateAvatarDto);
   }
 
   @Delete(':id')
-  remove(@Param('id') id: string) {
-    return this.avatarService.remove(+id);
+  async remove(@Param('id') id: number) {
+    return await this.avatarService.remove(id);
   }
 }
