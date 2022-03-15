@@ -1,32 +1,32 @@
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
-import { CreateAvatarDto } from './dto/create-avatar.dto';
-import { UpdateAvatarDto } from './dto/update-avatar.dto';
+import { AvatarDto } from './dto/avatar.dto';
 import { Avatar } from './entities/avatar.entity';
 
 @Injectable()
 export class AvatarService {
 
-  constructor(@InjectRepository(Avatar) private readonly repo: Repository<Avatar>) { }
-
-  create(createAvatarDto: CreateAvatarDto) {
-    return 'This action adds a new avatar';
+  constructor(@InjectRepository(Avatar) private readonly repo: Repository<Avatar>) { 
   }
 
-  async findAll() {
-    return await this.repo.find();
-  }
+  // create(createAvatarDto: AvatarDto) {
+  //   return 'This action adds a new avatar';
+  // }
 
-  async findOne(id: number) {
-    return await this.repo.findOne({ id: id });
-  }
+  // async findAll() {
+  //   return await this.repo.find().then( avatars => avatars.map(avatar => AvatarDto.fromEntity(avatar)));
+  // }
 
-  async update(id: number, updateAvatarDto: UpdateAvatarDto) {
-    return await this.repo.update(id , updateAvatarDto);
-  }
+  // async findOne(id: number) {
+  //   return await this.repo.findOne({ id: id }).then( avatar => AvatarDto.fromEntity(avatar));
+  // }
 
-  async remove(id: number) {
-    return await this.repo.remove([]);
-  }
+  // async update(id: number, updateAvatarDto: AvatarDto) {
+  //   return await this.repo.update(id , updateAvatarDto);
+  // }
+
+  // async remove(id: number) {
+  //   return await this.repo.remove([]);
+  // }
 }

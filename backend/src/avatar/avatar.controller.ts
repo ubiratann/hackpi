@@ -1,34 +1,34 @@
 import { Controller, Get, Post, Body, Patch, Param, Delete } from '@nestjs/common';
 import { AvatarService } from './avatar.service';
-import { CreateAvatarDto } from './dto/create-avatar.dto';
-import { UpdateAvatarDto } from './dto/update-avatar.dto';
+import { AvatarDto } from './dto/avatar.dto';
 
 @Controller('avatar')
 export class AvatarController {
-  constructor(private readonly avatarService: AvatarService) {}
 
-  @Post()
-  async create(@Body() createAvatarDto: CreateAvatarDto) {
-    return await this.avatarService.create(createAvatarDto);
-  }
+  // constructor(private readonly avatarService: AvatarService) {}
 
-  @Get()
-  async findAll() {
-    return await this.avatarService.findAll();
-  }
+  // @Post()
+  // async create(@Body() avatarDto: AvatarDto) {
+  //   return await this.avatarService.create(avatarDto);
+  // }
 
-  @Get(':id')
-  async findOne(@Param('id') id: number) {
-    return await this.avatarService.findOne(+id);
-  }
+  // @Get()
+  // async findAll() {
+  //   return await this.avatarService.findAll();
+  // }
 
-  @Patch(':id')
-  async update(@Param('id') id: number, @Body() updateAvatarDto: UpdateAvatarDto) {
-    return await this.avatarService.update(id, updateAvatarDto);
-  }
+  // @Get(':id')
+  // async findOne(@Param('id') id: number) {
+  //   return await this.avatarService.findOne(id);
+  // }
 
-  @Delete(':id')
-  async remove(@Param('id') id: number) {
-    return await this.avatarService.remove(id);
-  }
+  // @Patch(':id')
+  // async update(@Param('id') id: number, @Body() avatarDto: AvatarDto) {
+  //   return await this.avatarService.update(id, avatarDto);
+  // }
+
+  // @Delete(':id')
+  // async remove(@Param('id') id: number) {
+  //   return await this.avatarService.remove(id);
+  // }
 }
