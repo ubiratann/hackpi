@@ -1,66 +1,103 @@
-import React from 'react';
-import { StyleSheet, Text, Dimensions, Image } from 'react-native';
-import { PanGestureHandler } from 'react-native-gesture-handler';
-import Animated, { useAnimatedGestureHandler, useSharedValue, useAnimatedStyle, withSpring } from 'react-native-reanimated';
+import React, { useState } from 'react';
+import { Dimensions, Image, StyleSheet } from 'react-native';
+import { PanGestureHandler, PanGestureHandlerGestureEvent } from 'react-native-gesture-handler';
+import Animated, {
+  runOnJS, useAnimatedGestureHandler,
+  useAnimatedStyle,
+  useSharedValue,
+  withSpring
+} from 'react-native-reanimated';
 
-type itemProp = {
-  name: string,
+type itemResponseTypes = {
+  id: number,
+  value: boolean
 }
 
-import rampa_acesso from '../assets/infraestrutura/rampa_acesso.png';
-import cadeira_mesa from '../assets/infraestrutura/cadeira_mesa.png';
+type itemTypes = {
+  id: number,
+  nome: string,
+  img: string,
+}
 
-export default function App(prop: itemProp) {
+type itemProp = {
+  item: itemTypes,
+  numberItens: number,
+  response: (value: itemResponseTypes) => void
+}
 
-  const deviceWidth = Dimensions.get('window').width;
+const deviceWidth = Dimensions.get('window').width;
+const deviceHeight = Dimensions.get('window').height;
 
-  const posX = useSharedValue((deviceWidth / 2) - 48);
-  const posY = useSharedValue(300);
+export default function App({ item, numberItens, response }: itemProp) {
+  const [x, setX] = useState(0);
+  const [y, setY] = useState(0);
 
-  const onGestureEvent = useAnimatedGestureHandler({
-    onStart(_, ctx: any) {
+  const posX = useSharedValue(0);
+  const posY = useSharedValue(0);
+  const scaleAnimation = useSharedValue(false);
+
+  function handleItemInTrunk(value: boolean) {
+    response({ id: item.id, value: value });
+  }
+
+  const onGestureEvent = useAnimatedGestureHandler<PanGestureHandlerGestureEvent, { posX: number, posY: number, scale: number }>({
+    onStart(_, ctx) {
       ctx.posX = posX.value;
       ctx.posY = posY.value;
     },
-    onActive(event, ctx: any) {
+    onActive(event, ctx) {
       posX.value = ctx.posX + event.translationX;
       posY.value = ctx.posY + event.translationY;
     },
     onEnd() {
-      if (posX.value >= deviceWidth / 2 && posY.value >= 500) {
-        posX.value = withSpring(deviceWidth - 140);
-        posY.value = withSpring(580);
+      if (posX.value > (deviceWidth / 3) - x && posY.value > (deviceHeight - 300) - y) {
+        posX.value = withSpring((deviceWidth - 172) - x);
+        posY.value = withSpring((deviceHeight - 169) - y);
+        scaleAnimation.value = true;
+        runOnJS(handleItemInTrunk)(false);
       }
-      else
-        if (posX.value <= deviceWidth / 2 && posY.value >= 500) {
-          posX.value = withSpring(40);
-          posY.value = withSpring(580);
-        }
-        else {
-          posX.value = withSpring((deviceWidth / 2) - 48);
-          posY.value = withSpring(300);
-        }
+      else if (posX.value < (deviceWidth / 3) - x && posY.value > (deviceHeight - 300) - y) {
+        posX.value = withSpring(12 - x);
+        posY.value = withSpring((deviceHeight - 169) - y);
+        scaleAnimation.value = true;
+        runOnJS(handleItemInTrunk)(true);
+      }
+      else {
+        posX.value = withSpring(0);
+        posY.value = withSpring(0);
+        scaleAnimation.value = false;
+      }
     }
   });
 
-  const positionStyle = useAnimatedStyle(() => {
+  const animationStyleItem = useAnimatedStyle(() => {
     return {
       transform: [
         { translateX: posX.value },
-        { translateY: posY.value }
-      ]
+        { translateY: posY.value },
+        { scale: withSpring(scaleAnimation.value ? 0.5 : 1) }
+      ],
     }
   });
 
   return (
     <PanGestureHandler onGestureEvent={onGestureEvent}>
-      <Animated.View style={[styles.item, positionStyle]}>
+      <Animated.View style={[styles.item, animationStyleItem]} onLayout={event => {
+        setX(event.nativeEvent.layout.x);
+        setY(event.nativeEvent.layout.y);
+      }}
+      >
         {
-          prop.name === 'rampa_acesso' ?
-            <Image style={styles.Imageitem} source={require(`../assets/infraestrutura/rampa_acesso.png`)} />
-            :
-            prop.name === 'cadeira_mesa' &&
-            <Image style={styles.Imageitem} source={require(`../assets/infraestrutura/cadeira_mesa.png`)} />
+          <Image
+            key={item.id}
+            style={
+              [numberItens < 3 ?
+                [{ width: (deviceWidth / 2) - 32, height: (deviceWidth / 2) - 32 }]
+                :
+                [{ width: (deviceWidth / 3) - 28, height: (deviceWidth / 3) - 28 }],
+              [styles.Imageitem]]
+            }
+            source={{ uri: item.img }} />
         }
       </Animated.View>
     </PanGestureHandler>
@@ -69,19 +106,28 @@ export default function App(prop: itemProp) {
 
 const styles = StyleSheet.create({
   item: {
-    position: 'absolute',
-    // width: 96,
-    // height: 96,
-    // borderRadius: 24,
-    // justifyContent: 'center',
-    // alignItems: 'center'
+    borderRadius: 16,
+    marginVertical: 8,
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    backgroundColor: '#EBB685',
+    // zIndex: 1
   },
   Imageitem: {
-    width: 96,
-    height: 96,
-    borderRadius: 24,
+    borderRadius: 16,
+  },
+  textContainer: {
+    position: 'absolute',
+    bottom: 0,
+    height: 40,
+    width: (deviceWidth / 3) - 30,
+    marginVertical: 4,
+    justifyContent: 'center',
+    alignItems: 'center'
   },
   textItem: {
-    color: '#fff'
+    fontSize: 16,
+    textAlign: 'center',
+    color: '#000000'
   }
 });
