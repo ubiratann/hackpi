@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Dimensions, Image, StyleSheet } from 'react-native';
+import { Dimensions, Image, StyleSheet, TouchableOpacity } from 'react-native';
 import { PanGestureHandler, PanGestureHandlerGestureEvent } from 'react-native-gesture-handler';
 import Animated, {
   runOnJS, useAnimatedGestureHandler,
@@ -23,12 +23,13 @@ type itemProp = {
   item: itemTypes,
   numberItens: number,
   response: (value: itemResponseTypes) => void
+  click: () => void
 }
 
 const deviceWidth = Dimensions.get('window').width;
 const deviceHeight = Dimensions.get('window').height;
 
-export default function App({ item, numberItens, response }: itemProp) {
+export default function App({ item, numberItens, response, click }: itemProp) {
   const [x, setX] = useState(0);
   const [y, setY] = useState(0);
 
@@ -82,23 +83,28 @@ export default function App({ item, numberItens, response }: itemProp) {
 
   return (
     <PanGestureHandler onGestureEvent={onGestureEvent}>
-      <Animated.View style={[styles.item, animationStyleItem]} onLayout={event => {
-        setX(event.nativeEvent.layout.x);
-        setY(event.nativeEvent.layout.y);
-      }}
+      <Animated.View
+        style={[styles.item, animationStyleItem]}
+        onLayout={event => {
+          setX(event.nativeEvent.layout.x);
+          setY(event.nativeEvent.layout.y);
+        }}
+
       >
-        {
-          <Image
-            key={item.id}
-            style={
-              [numberItens < 3 ?
-                [{ width: (deviceWidth / 2) - 32, height: (deviceWidth / 2) - 32 }]
-                :
-                [{ width: (deviceWidth / 3) - 28, height: (deviceWidth / 3) - 28 }],
-              [styles.Imageitem]]
-            }
-            source={{ uri: item.img }} />
-        }
+        <TouchableOpacity onPress={click}>
+          {
+            <Image
+              key={item.id}
+              style={
+                [numberItens < 3 ?
+                  [{ width: (deviceWidth / 2) - 32, height: (deviceWidth / 2) - 32 }]
+                  :
+                  [{ width: (deviceWidth / 3) - 28, height: (deviceWidth / 3) - 28 }],
+                [styles.Imageitem]]
+              }
+              source={{ uri: item.img }} />
+          }
+        </TouchableOpacity>
       </Animated.View>
     </PanGestureHandler>
   );

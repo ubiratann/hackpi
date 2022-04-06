@@ -8,6 +8,7 @@ import { Image, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 import bau_não_tem from '../assets/baus/bau_não_tem.png';
 import bau_tem from '../assets/baus/bau_tem.png';
 import Item from '../components/Item';
+import ItemModal from '../components/ItemModal';
 import { Data } from '../utils/data';
 
 type RootStackParamList = {
@@ -51,27 +52,31 @@ type itemTypes = {
   id: number,
   nome: string,
   img: string,
+  descricao: string,
   valor: number
 };
 
 export default function Question({ navigation, route }: Props) {
   const [arrayResponse, setArrayResponse] = useState<(itemResponseTypes | undefined)[]>([]);
   const [question, setQuestion] = useState<questionTypes>();
+  const [item, setItem] = useState<itemTypes>();
   const [questionNumber, setQuestionNumber] = useState(0);
   const [numberItemNotSelected, setNumberItemNotSelected] = useState(1);
   const [student, setStudent] = useState<studentTypes>();
 
   const bottomSheetModalStartRef = useRef<BottomSheetModal>(null);
+  const bottomSheetModalItemRef = useRef<BottomSheetModal>(null);
   const bottomSheetModalRef = useRef<BottomSheetModal>(null);
 
   useEffect(() => {
+    console.log(`id da fase: ${route.params.idPhase}`);
     setStudent(route.params.student);
     setQuestion(Data.pergunta[questionNumber]);
     setNumberItemNotSelected(Data.pergunta[questionNumber].item.length);
     setArrayResponse([]);
     setTimeout(() => {
       bottomSheetModalStartRef.current?.present();
-    }, 1000);
+    }, 500);
   }, [, questionNumber]);
 
   useEffect(() => {
@@ -82,6 +87,11 @@ export default function Question({ navigation, route }: Props) {
 
   function handleButtonModalStartClick() {
     bottomSheetModalStartRef.current?.close();
+  }
+
+  function handleItemClick(item: itemTypes) {
+    setItem(item);
+    bottomSheetModalItemRef.current?.present()
   }
 
   function handleButtonModalClick(nextItem: boolean) {
@@ -110,7 +120,7 @@ export default function Question({ navigation, route }: Props) {
       <View style={styles.list}>
         {
           question?.item.map(item => (
-            <Item key={item.id} item={item} numberItens={question?.item.length} response={handleItemInTrunk} />
+            <Item key={item.id} item={item} numberItens={question?.item.length} response={handleItemInTrunk} click={() => handleItemClick(item)} />
           ))
         }
       </View>
@@ -118,10 +128,15 @@ export default function Question({ navigation, route }: Props) {
         <Image style={styles.img} source={bau_tem} />
         <Image style={styles.img} source={bau_não_tem} />
       </View>
+
+
+      <ItemModal item={item} reference={bottomSheetModalItemRef} />
+
+
       <BottomSheetModalProvider>
         <BottomSheetModal
           ref={bottomSheetModalStartRef}
-          snapPoints={['80%']}
+          snapPoints={['65%']}
           backdropComponent={() => <View style={styles.background} />}
           handleStyle={{ backgroundColor: '#F2F2F2', borderRadius: 16 }}
           enablePanDownToClose={true}
@@ -140,7 +155,7 @@ export default function Question({ navigation, route }: Props) {
         </BottomSheetModal>
         <BottomSheetModal
           ref={bottomSheetModalRef}
-          snapPoints={['80%']}
+          snapPoints={['55%']}
           backdropComponent={() => <View style={styles.background} />}
           handleStyle={{ backgroundColor: '#F2F2F2', borderRadius: 16 }}
           enablePanDownToClose={true}
@@ -217,7 +232,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'space-between',
     backgroundColor: '#F2F2F2',
-    padding: 24
+    padding: 24,
   },
   containerText: {
     width: '100%',
@@ -225,7 +240,8 @@ const styles = StyleSheet.create({
     paddingHorizontal: 24,
     paddingTop: 24,
     paddingBottom: 93,
-    borderRadius: 16
+    borderRadius: 16,
+    marginBottom: 61
   },
   title: {
     fontFamily: 'Sniglet_400Regular',
