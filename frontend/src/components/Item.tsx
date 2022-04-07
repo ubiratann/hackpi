@@ -9,7 +9,7 @@ import Animated, {
 } from 'react-native-reanimated';
 
 type itemResponseTypes = {
-  id: number,
+  item: itemTypes,
   value: boolean
 }
 
@@ -17,6 +17,8 @@ type itemTypes = {
   id: number,
   nome: string,
   img: string,
+  descricao: string,
+  tipo: number
 }
 
 type itemProp = {
@@ -38,7 +40,7 @@ export default function App({ item, numberItens, response, click }: itemProp) {
   const scaleAnimation = useSharedValue(false);
 
   function handleItemInTrunk(value: boolean) {
-    response({ id: item.id, value: value });
+    response({ item: item, value: value });
   }
 
   const onGestureEvent = useAnimatedGestureHandler<PanGestureHandlerGestureEvent, { posX: number, posY: number, scale: number }>({

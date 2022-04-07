@@ -389,21 +389,21 @@ export const Data = {
           nome: 'Blocos',
           img: 'https://i.imgur.com/r8TpnBN.png',
           descricao: 'Se você brinca com bonecos coloque esse item no baú',
-          valor: 1
+          tipo: 1
         },
         {
           id: 9022529791,
           nome: 'Carrinho',
           img: 'https://i.imgur.com/qtYKE5I.png',
           descricao: 'Se você brinca com bonecos coloque esse item no baú',
-          valor: 2
+          tipo: 2
         },
         {
           id: 9992529791,
           nome: 'Quebra-cabeça',
           img: 'https://i.imgur.com/yT5zyqT.png',
           descricao: 'Se você brinca com bonecos coloque esse item no baú',
-          valor: 3
+          tipo: 3
         },
       ],
     },
@@ -419,35 +419,35 @@ export const Data = {
           nome: 'Boneca',
           img: 'https://i.imgur.com/DeYM360.png',
           descricao: 'Se você brinca com bonecos coloque esse item no baú',
-          valor: 0
+          tipo: 0
         },
         {
           id: 9022529455,
           nome: 'peças',
           img: 'https://i.imgur.com/7NLf47K.png',
           descricao: 'Se você brinca com bonecos coloque esse item no baú',
-          valor: 0
+          tipo: 0
         },
         {
           id: 1952529777,
           nome: 'Blocos',
           img: 'https://i.imgur.com/r8TpnBN.png',
           descricao: 'Se você brinca com bonecos coloque esse item no baú',
-          valor: 0
+          tipo: 0
         },
         {
           id: 9022529000,
           nome: 'Carrinho',
           img: 'https://i.imgur.com/qtYKE5I.png',
           descricao: 'Se você brinca com bonecos coloque esse item no baú',
-          valor: 0
+          tipo: 0
         },
         {
           id: 9992529444,
           nome: 'Quebra-cabeça',
           img: 'https://i.imgur.com/yT5zyqT.png',
           descricao: 'Se você brinca com bonecos coloque esse item no baú',
-          valor: 0
+          tipo: 0
         },
       ],
     }

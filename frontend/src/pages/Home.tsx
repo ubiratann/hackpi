@@ -52,8 +52,8 @@ export default function Home({ navigation, route }: Props) {
   return (
     <View style={styles.container}>
       <View style={styles.containerText}>
-        <Text style={styles.title}>parabéns joão !</Text>
-        <Text style={styles.text}>VAMoS PARA A PRÓXIMA PERGUNTA.</Text>
+        <Text style={styles.title}>{`olá ${student?.name}.`}</Text>
+        <Text style={styles.text}>ME CHAMO ARAÊ, VAMOS BRINCAR ? TERMINE UMA FASE PARA LIBERAR OUTRA.</Text>
         <Image style={styles.character} source={{}} />
         <Image style={styles.icon} source={{}} />
       </View>

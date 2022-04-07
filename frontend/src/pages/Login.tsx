@@ -27,7 +27,7 @@ export default function Login({ navigation }: Props) {
 
   useEffect(() => {
     setStudent({
-      name: 'Joáo',
+      name: 'João',
       idade: 5,
       sexo: 'M',
       sala: 'infantil 5 - A',

@@ -35,7 +35,7 @@ type studentTypes = {
 }
 
 type itemResponseTypes = {
-  id: number,
+  item: itemTypes,
   value: boolean
 };
 
@@ -53,7 +53,7 @@ type itemTypes = {
   nome: string,
   img: string,
   descricao: string,
-  valor: number
+  tipo: number
 };
 
 export default function Question({ navigation, route }: Props) {
@@ -94,14 +94,31 @@ export default function Question({ navigation, route }: Props) {
     bottomSheetModalItemRef.current?.present()
   }
 
-  function handleButtonModalClick(nextItem: boolean) {
-    console.log({
-      nome_aluno: student?.name,
-      id_pergunta: question?.id,
-      text: question?.texto,
-      resposta: arrayResponse
-    });
-    if (nextItem) {
+
+  function handleButtonModalClick(nextQuestion: boolean) {
+
+    if (question?.tipo === 1) {
+      const item = arrayResponse.find(item => (
+        item?.value === true
+      ));
+      console.log({
+        aluno: student,
+        id_pergunta: question?.id,
+        value: item?.item.tipo
+      });
+    }
+    else if (question?.tipo === 2) {
+      const items = arrayResponse.filter(item => (
+        item?.value === true
+      ));
+      console.log({
+        aluno: student,
+        id_pergunta: question?.id,
+        value: items.length === 0 ? 1 : items.length === 1 ? 2 : 3
+      });
+    }
+
+    if (nextQuestion) {
       setQuestionNumber(questionNumber + 1);
       bottomSheetModalRef.current?.close();
     }
