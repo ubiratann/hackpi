@@ -10,7 +10,7 @@ import bau_tem from '../assets/baus/bau_tem.png';
 import Item from '../components/Item';
 import ItemModal from '../components/ItemModal';
 import SpeechBubble from '../components/SpeechBubble';
-import { Data } from '../utils/data';
+import api from '../services/api';
 
 type RootStackParamList = {
   question: {
@@ -41,16 +41,16 @@ type itemResponseTypes = {
 };
 
 type questionTypes = {
-  id: number,
+  _id: number,
   texto: string,
   id_fase: number,
   id_dimensao: number,
   tipo: number
-  item: itemTypes[]
+  itens: itemTypes[]
 }
 
 type itemTypes = {
-  id: number,
+  _id: number,
   nome: string,
   img: string,
   descricao: string,
@@ -59,7 +59,8 @@ type itemTypes = {
 
 export default function Question({ navigation, route }: Props) {
   const [arrayResponse, setArrayResponse] = useState<(itemResponseTypes | undefined)[]>([]);
-  const [question, setQuestion] = useState<questionTypes>();
+  const [question, setQuestion] = useState<questionTypes | undefined>(undefined);
+  const [questionList, setQuestionList] = useState<questionTypes[]>([]);
   const [item, setItem] = useState<itemTypes>();
   const [questionNumber, setQuestionNumber] = useState(0);
   const [numberItemNotSelected, setNumberItemNotSelected] = useState(1);
@@ -70,14 +71,26 @@ export default function Question({ navigation, route }: Props) {
   const bottomSheetModalRef = useRef<BottomSheetModal>(null);
 
   useEffect(() => {
-    console.log(`id da fase: ${route.params.idPhase}`);
-    setStudent(route.params.student);
-    setQuestion(Data.pergunta[questionNumber]);
-    setNumberItemNotSelected(Data.pergunta[questionNumber].item.length);
-    setArrayResponse([]);
-    setTimeout(() => {
+
+    async function loadQuestionList() {
+      const { data } = await api.get('perguntas');
+
+      console.log(questionNumber);
+      setQuestionList(data.Perguntas);
+      setQuestion(data.Perguntas[questionNumber]);
+      setNumberItemNotSelected(data.Perguntas[questionNumber].itens.length);
+
       bottomSheetModalStartRef.current?.present();
-    }, 500);
+    }
+
+    loadQuestionList();
+
+    // console.log(`_id da fase: ${route.params.idPhase}`);
+    setStudent(route.params.student);
+    setArrayResponse([]);
+    // setTimeout(() => {
+    //   bottomSheetModalStartRef.current?.present();
+    // }, 500);
   }, [, questionNumber]);
 
   useEffect(() => {
@@ -104,7 +117,7 @@ export default function Question({ navigation, route }: Props) {
       ));
       console.log({
         aluno: student,
-        id_pergunta: question?.id,
+        id_pergunta: question?._id,
         value: item?.item.tipo
       });
     }
@@ -114,7 +127,7 @@ export default function Question({ navigation, route }: Props) {
       ));
       console.log({
         aluno: student,
-        id_pergunta: question?.id,
+        id_pergunta: question?._id,
         value: items.length === 0 ? 1 : items.length === 1 ? 2 : 3
       });
     }
@@ -137,8 +150,8 @@ export default function Question({ navigation, route }: Props) {
     <View style={styles.container}>
       <View style={styles.list}>
         {
-          question?.item.map(item => (
-            <Item key={item.id} item={item} numberItens={question?.item.length} response={handleItemInTrunk} click={() => handleItemClick(item)} />
+          question?.itens.map(item => (
+            <Item key={item._id} item={item} numberItens={question?.itens.length} response={handleItemInTrunk} click={() => handleItemClick(item)} />
           ))
         }
       </View>
@@ -178,7 +191,8 @@ export default function Question({ navigation, route }: Props) {
         >
           <BottomSheetView style={styles.contentContainer}>
             {
-              numberItemNotSelected < 1 && questionNumber < Data.pergunta.length - 1 ?
+              // questionList &&
+              numberItemNotSelected < 1 && questionNumber < questionList.length - 1 ?
                 <>
                   <SpeechBubble
                     title={`parabéns ${student?.name} !`}
@@ -189,7 +203,7 @@ export default function Question({ navigation, route }: Props) {
                   </TouchableOpacity>
                 </>
                 :
-                questionNumber === Data.pergunta.length - 1 &&
+                questionNumber === questionList.length - 1 &&
                 <>
                   <SpeechBubble
                     title={`parabéns ${student?.name} !`}

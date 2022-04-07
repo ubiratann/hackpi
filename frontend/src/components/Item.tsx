@@ -14,7 +14,7 @@ type itemResponseTypes = {
 }
 
 type itemTypes = {
-  id: number,
+  _id: number,
   nome: string,
   img: string,
   descricao: string,
@@ -96,7 +96,7 @@ export default function App({ item, numberItens, response, click }: itemProp) {
         <TouchableOpacity onPress={click}>
           {
             <Image
-              key={item.id}
+              key={item._id}
               style={
                 [numberItens < 3 ?
                   [{ width: (deviceWidth / 2) - 32, height: (deviceWidth / 2) - 32 }]
