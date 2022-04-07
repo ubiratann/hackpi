@@ -16,9 +16,9 @@ export class DimensaoController {
 
   @Get()
   async fetchAll(@Res() response) {
-    const Dimensaos = await this.DimensaoService.findAll();
+    const Dimensoes = await this.DimensaoService.findAll();
     return response.status(HttpStatus.OK).json({
-      Dimensaos
+      Dimensoes
     })
   }
 

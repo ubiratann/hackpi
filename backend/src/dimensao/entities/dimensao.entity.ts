@@ -1,18 +1,16 @@
 import { Prop, Schema, SchemaFactory } from "@nestjs/mongoose";
-import { Document } from 'mongoose';
+import mongoose from "mongoose";
+import { Types, Document } from 'mongoose';
 
 export type DimensaoDocument = Dimensao & Document;
 
 @Schema({collection: "dimensoes"})
 export class Dimensao {
-    @Prop()
-    _id: number;
+    @Prop({ type: mongoose.Schema.Types.ObjectId})
+    _id: Types.ObjectId;
     
     @Prop()
-    descricao: string;
-    
-    @Prop()
-    imagem: string;
+    nome: string;
 
 }
 

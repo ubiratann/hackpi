@@ -2,13 +2,13 @@ import { Body, Controller, Delete, Get, HttpStatus, Param, Post, Put, Res } from
 import { Pergunta } from './entities/pergunta.entity';
 import { PerguntaService } from './pergunta.service';
 
-@Controller('perguntas')
+@Controller('pergunta')
 export class PerguntaController {
-  constructor(private readonly PerguntaService: PerguntaService) { }
+  constructor(private readonly perguntaService: PerguntaService) { }
 
   @Post()
   async createPergunta(@Res() response, @Body() Pergunta: Pergunta) {
-    const newPergunta = await this.PerguntaService.create(Pergunta);
+    const newPergunta = await this.perguntaService.create(Pergunta);
     return response.status(HttpStatus.CREATED).json({
       newPergunta
     })
@@ -16,7 +16,7 @@ export class PerguntaController {
 
   @Get()
   async fetchAll(@Res() response) {
-    const Perguntas = await this.PerguntaService.findAll();
+    const Perguntas = await this.perguntaService.findAll();
     return response.status(HttpStatus.OK).json({
       Perguntas
     })
@@ -24,7 +24,7 @@ export class PerguntaController {
 
   @Get('/:codigo')
   async findById(@Res() response, @Param('codigo') codigo) {
-    const Pergunta = await this.PerguntaService.findOne(codigo);
+    const Pergunta = await this.perguntaService.findOne(codigo);
     return response.status(HttpStatus.OK).json({
       Pergunta
     })
@@ -32,7 +32,7 @@ export class PerguntaController {
 
   @Get('/dimensao/:codigo')
   async findByDimensao(@Res() response, @Param('codigo') codigo) {
-    const Pergunta = await this.PerguntaService.findByDimensao(codigo);
+    const Pergunta = await this.perguntaService.findByDimensao(codigo);
     return response.status(HttpStatus.OK).json({
       Pergunta
     })
@@ -40,7 +40,7 @@ export class PerguntaController {
 
   @Put('/:codigo')
   async update(@Res() response, @Param('codigo') codigo, @Body() Pergunta: Pergunta) {
-    const updatedPergunta = await this.PerguntaService.update(codigo, Pergunta);
+    const updatedPergunta = await this.perguntaService.update(codigo, Pergunta);
     return response.status(HttpStatus.OK).json({
       updatedPergunta
     })
@@ -48,7 +48,7 @@ export class PerguntaController {
 
   @Delete('/:codigo')
   async delete(@Res() response, @Param('codigo') codigo) {
-    const deletedPergunta = await this.PerguntaService.delete(codigo);
+    const deletedPergunta = await this.perguntaService.delete(codigo);
     return response.status(HttpStatus.OK).json({
       deletedPergunta
     })

@@ -14,7 +14,11 @@ export class PerguntaService {
   }
 
   async findAll(): Promise<Pergunta[]> {
-    return await this.PerguntaModel.find().exec();
+    return await this.PerguntaModel.find()
+                                   .populate("id_dimensao")
+                                   .populate("id_fase")
+                                   .populate("itens")
+                                   .exec();
   }
 
   async findOne(id): Promise<Pergunta> {
