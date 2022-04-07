@@ -1,7 +1,8 @@
 import { RouteProp } from '@react-navigation/native';
 import { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import React, { useEffect, useState } from 'react';
-import { Dimensions, Image, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
+import { Dimensions, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
+import SpeechBubble from '../components/SpeechBubble';
 import { Data } from '../utils/data';
 
 type RootStackParamList = {
@@ -51,12 +52,10 @@ export default function Home({ navigation, route }: Props) {
 
   return (
     <View style={styles.container}>
-      <View style={styles.containerText}>
-        <Text style={styles.title}>{`olá ${student?.name}.`}</Text>
-        <Text style={styles.text}>ME CHAMO ARAÊ, VAMOS BRINCAR ? TERMINE UMA FASE PARA LIBERAR OUTRA.</Text>
-        <Image style={styles.character} source={{}} />
-        <Image style={styles.icon} source={{}} />
-      </View>
+      <SpeechBubble
+        title={`olá ${student?.name}.`}
+        text='ME CHAMO ARAÊ, VAMOS BRINCAR ? TERMINE UMA FASE PARA LIBERAR OUTRA.'
+      />
       <View style={styles.containerButton}>
         {
           phase.map(phase => (
@@ -78,47 +77,6 @@ const styles = StyleSheet.create({
     paddingHorizontal: 24,
     paddingTop: 62,
     justifyContent: 'space-between'
-  },
-  containerText: {
-    width: '100%',
-    backgroundColor: '#FFFFFF',
-    paddingHorizontal: 24,
-    paddingTop: 24,
-    paddingBottom: 93,
-    borderRadius: 16
-  },
-  title: {
-    fontFamily: 'Sniglet_400Regular',
-    fontSize: 24,
-    color: '#555555',
-    lineHeight: 30,
-    letterSpacing: 0.5,
-    marginBottom: 16,
-    textTransform: 'uppercase'
-  },
-  text: {
-    fontFamily: 'Sniglet_400Regular',
-    fontSize: 20,
-    color: '#999999',
-    lineHeight: 24.5,
-    letterSpacing: 0.5,
-    textTransform: 'uppercase'
-  },
-  icon: {
-    position: 'absolute',
-    bottom: 24,
-    right: 24,
-    height: 24,
-    width: 24,
-    backgroundColor: '#999999',
-  },
-  character: {
-    position: 'absolute',
-    bottom: -61,
-    backgroundColor: '#EBB685',
-    height: 130,
-    width: 130,
-    borderRadius: 65
   },
   containerButton: {
     width: '100%',

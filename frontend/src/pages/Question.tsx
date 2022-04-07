@@ -9,6 +9,7 @@ import bau_não_tem from '../assets/baus/bau_não_tem.png';
 import bau_tem from '../assets/baus/bau_tem.png';
 import Item from '../components/Item';
 import ItemModal from '../components/ItemModal';
+import SpeechBubble from '../components/SpeechBubble';
 import { Data } from '../utils/data';
 
 type RootStackParamList = {
@@ -159,12 +160,10 @@ export default function Question({ navigation, route }: Props) {
           enablePanDownToClose={true}
         >
           <BottomSheetView style={styles.contentContainer}>
-            <View style={styles.containerText}>
-              <Text style={styles.title}>vamos brincar ?</Text>
-              <Text style={styles.text}>{question?.texto}</Text>
-              <Image style={styles.character} source={{}} />
-              <Image style={styles.icon} source={{}} />
-            </View>
+            <SpeechBubble
+              title='Vamos Brincar ?'
+              text={question?.texto}
+            />
             <TouchableOpacity style={styles.button} onPress={handleButtonModalStartClick}>
               <Text style={styles.textButton}>COMEÇAR</Text>
             </TouchableOpacity>
@@ -181,12 +180,10 @@ export default function Question({ navigation, route }: Props) {
             {
               numberItemNotSelected < 1 && questionNumber < Data.pergunta.length - 1 ?
                 <>
-                  <View style={styles.containerText}>
-                    <Text style={styles.title}>parabéns {student?.name} !</Text>
-                    <Text style={styles.text}>VAMoS PARA A PRÓXIMA PERGUNTA.</Text>
-                    <Image style={styles.character} source={{}} />
-                    <Image style={styles.icon} source={{}} />
-                  </View>
+                  <SpeechBubble
+                    title={`parabéns ${student?.name} !`}
+                    text='VAMoS PARA A PRÓXIMA PERGUNTA.'
+                  />
                   <TouchableOpacity style={styles.button} onPress={() => handleButtonModalClick(true)}>
                     <Text style={styles.textButton}>PRÓXIMA PERGUNTA</Text>
                   </TouchableOpacity>
@@ -194,12 +191,10 @@ export default function Question({ navigation, route }: Props) {
                 :
                 questionNumber === Data.pergunta.length - 1 &&
                 <>
-                  <View style={styles.containerText}>
-                    <Text style={styles.title}>parabéns {student?.name} !</Text>
-                    <Text style={styles.text}>você terminou essa fase, vamos para a próxima.</Text>
-                    <Image style={styles.character} source={{}} />
-                    <Image style={styles.icon} source={{}} />
-                  </View>
+                  <SpeechBubble
+                    title={`parabéns ${student?.name} !`}
+                    text='você terminou essa fase, vamos para a próxima.'
+                  />
                   <TouchableOpacity style={styles.button} onPress={() => handleButtonModalClick(false)}>
                     <Text style={styles.textButton}>próxima fase</Text>
                   </TouchableOpacity>
@@ -250,48 +245,6 @@ const styles = StyleSheet.create({
     justifyContent: 'space-between',
     backgroundColor: '#F2F2F2',
     padding: 24,
-  },
-  containerText: {
-    width: '100%',
-    backgroundColor: '#fff',
-    paddingHorizontal: 24,
-    paddingTop: 24,
-    paddingBottom: 93,
-    borderRadius: 16,
-    marginBottom: 61
-  },
-  title: {
-    fontFamily: 'Sniglet_400Regular',
-    fontSize: 24,
-    color: '#555555',
-    lineHeight: 30,
-    letterSpacing: 0.5,
-    marginBottom: 16,
-    textTransform: 'uppercase'
-  },
-  text: {
-    fontFamily: 'Sniglet_400Regular',
-    fontSize: 20,
-    color: '#999999',
-    lineHeight: 24.5,
-    letterSpacing: 0.5,
-    textTransform: 'uppercase'
-  },
-  icon: {
-    position: 'absolute',
-    bottom: 24,
-    right: 24,
-    height: 24,
-    width: 24,
-    backgroundColor: '#999999',
-  },
-  character: {
-    position: 'absolute',
-    bottom: -61,
-    backgroundColor: '#EBB685',
-    height: 130,
-    width: 130,
-    borderRadius: 65
   },
   button: {
     width: '100%',
